@@ -28,13 +28,9 @@ WHEN  START BUTTON CLICKED
 /ENABLE USER CONTROLS
     WHILE UserControlsEnabled = TRUE
         When LEFT ARROW pressed:
-            IF NOT touching boundary:
-                Move player left
-            END IF
+            MoveLeft()
         When RIGHT ARROW pressed:
-            IF NOT touching boundary:
-                Move player right
-             END IF
+            MoveRight()
         When SPACEBAR pressed
             FireLaser()
     LOOP
@@ -43,3 +39,40 @@ GAMEPLAY
 
 /MOVEMENT
     /PLAYER
+SUBROUTINE MoveLeft():
+    IF NOT touching boundary:
+        Move player left
+    END IF
+END SUBROUTINE
+
+SUBROUTINE MoveRight():
+    IF NOT touching boundary:
+        Move player right
+    END IF
+END SUBROUTINE
+
+    /ENEMIES
+        WHILE Alive = TRUE:
+            Move enemy by Speed
+        LOOP
+
+        IF touching boundary:
+            Move enemy down a row
+            Speed = Speed * -1
+        END IF
+ 
+ /LASERS
+     /PLAYER
+     SUBROUTINE FireLaser():
+         Position laser on player
+         Move laser up
+         IF touching enemy
+             EnemyDamage(EnemyID)
+             IF there are no enemies left:
+                 Move onto next level
+             END IF
+         END IF
+     END SUBROUTINE
+     
+     /ENEMIES
+     
