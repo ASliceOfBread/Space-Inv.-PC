@@ -18,3 +18,28 @@ Timer = zero
 WHEN  START BUTTON CLICKED
 
 /GENERATE ENEMIES
+    Position enemy placeholders
+    Use spawn script to generate enemy types
+    Use classes to define enemy properties
+
+/HIDE INSTRUCTIONS
+    Hide instructions
+
+/ENABLE USER CONTROLS
+    WHILE UserControlsEnabled = TRUE
+        When LEFT ARROW pressed:
+            IF NOT touching boundary:
+                Move player left
+            END IF
+        When RIGHT ARROW pressed:
+            IF NOT touching boundary:
+                Move player right
+             END IF
+        When SPACEBAR pressed
+            FireLaser()
+    LOOP
+
+GAMEPLAY
+
+/MOVEMENT
+    /PLAYER
