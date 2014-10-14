@@ -53,7 +53,7 @@ END SUBROUTINE
 
     /ENEMIES
         WHILE Alive = TRUE:
-            Move enemy by Speed
+            after random time, move enemy by Speed
         LOOP
 
         IF touching boundary:
@@ -75,5 +75,19 @@ END SUBROUTINE
      END SUBROUTINE
      
      /ENEMIES
+     After random time, EnemyFireLaser(EnemyType)
      
+     SUBROUTINE EnemyFireLaer(Type):
+         IF Type = "NORMAL"
+             Laser.X = Enemy.X
+             Laser.Y = Enemy.Y
+             Move laser down by Speed
+             IF laser touches player:
+                 PlayerHit()
+             END IF
+         ELSE IF Type = "RAPID":
+             Laser.X = Enemy.X
+             Laser.Y = Enemy.Y
+             
+                 
     
