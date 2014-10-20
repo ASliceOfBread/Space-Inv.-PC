@@ -64,7 +64,8 @@ END SUBROUTINE
  /LASERS
      /PLAYER
      SUBROUTINE FireLaser():
-         Position laser on player
+         Laser.X = Enemy.X
+         Laser.Y = Enemy.Y
          Move laser up
          IF touching enemy
              EnemyDamage(EnemyID)
@@ -77,17 +78,48 @@ END SUBROUTINE
      /ENEMIES
      After random time, EnemyFireLaser(EnemyType)
      
-     SUBROUTINE EnemyFireLaer(Type):
-         IF Type = "NORMAL"
-             Laser.X = Enemy.X
-             Laser.Y = Enemy.Y
-             Move laser down by Speed
-             IF laser touches player:
-                 PlayerHit()
-             END IF
-         ELSE IF Type = "RAPID":
-             Laser.X = Enemy.X
-             Laser.Y = Enemy.Y
+     SUBROUTINE EnemyFireLaser(Type):
+        IF Type = "NORMAL"
+            Laser.X = Enemy.X
+            Laser.Y = Enemy.Y
+            Laser.IsVisible = TRUE
+            REPEAT UNTIL touching shield OR touching player OR touching floor:
+                Move laser by Speed
+            REPEAT
+            IF touching player:
+                PlayerHit()
+            ELSE IF touching shield:
+                ShieldDamage(Lasertip.X, Lasertip.Y)
+            ELSE IF touching ground:
+                Laser.IsVisible = FALSE
+        ELSE IF Type = "RAPID":
+            Laser.X = Enemy.X
+            Laser.Y = Enemy.Y
+            Laser.IsVisible = TRUE
+            REPEAT UNTIL touching shield OR touching player OR touching floor:
+                Move laser by speed
+            REPEAT
+            IF touching player:
+                PlayerHit()
+            ELSE IF touching shield:
+                ShieldDamage(Lasertip.X, Lasertip.Y)
+            ELSE IF touching ground:
+                Laser.IsVisible = FALSE
+            Wait random 0.5 to 1
+            EnemyFireLaser("RAPID")
+        ELSE IF Type = "INSTANT"
+            Laser.X = Enemy.X
+            Laser.Y = Enemy.Y
+            Laser.IsVisible = TRUE
+            REPEAT UNTIL touching shield OR touching player OR touching floor:
+                LaserHeight = LaserHeight + 1
+            REPEAT
+            IF touching player:
+                PlayerHit()
+            ELSE IF touching shield:
+                ShieldDamage(Lasertip.X, Lasertip.Y)
+            ELSE IF touching ground:
+                Laser.IsVisible = FALSE
+                LaserHeight = DefaultLaserHeight
+        ELSE IF Type = "SPLASH":
              
-                 
-    
