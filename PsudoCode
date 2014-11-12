@@ -122,4 +122,5 @@ END SUBROUTINE
                 Laser.IsVisible = FALSE
                 LaserHeight = DefaultLaserHeight
         ELSE IF Type = "SPLASH":
+             DIM Missile as New Splash
              
