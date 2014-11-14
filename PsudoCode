@@ -64,19 +64,23 @@ END SUBROUTINE
  /LASERS
      /PLAYER
      SUBROUTINE FireLaser():
-         Laser.X = Enemy.X
-         Laser.Y = Enemy.Y
-         Move laser up
-         IF touching enemy
-             EnemyDamage(EnemyID)
-             IF there are no enemies left:
+         PLaser.X = Player.X
+         PLaser.Y = Player.Y
+         Move PLaser up
+         For i = 0 To 43
+         IF PLaser is touching Enemy(i)
+             Enemy(i).Health = Enemy(i).Health - 1
+         END IF
+         NEXT i
+         IF there are no enemies left:
                  Move onto next level
-             END IF
          END IF
      END SUBROUTINE
      
      /ENEMIES
      After random time + Delay, EnemyFireLaser(Enemy(x).Type)
+     
+     FUNCTION EnemyID()
      
      SUBROUTINE EnemyFireLaser(Type):
         IF Type = "NORMAL"
