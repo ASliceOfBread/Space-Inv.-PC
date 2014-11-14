@@ -76,7 +76,7 @@ END SUBROUTINE
      END SUBROUTINE
      
      /ENEMIES
-     After random time, EnemyFireLaser(EnemyType)
+     After random time + Delay, EnemyFireLaser(Enemy(x).Type)
      
      SUBROUTINE EnemyFireLaser(Type):
         IF Type = "NORMAL"
@@ -122,5 +122,26 @@ END SUBROUTINE
                 Laser.IsVisible = FALSE
                 LaserHeight = DefaultLaserHeight
         ELSE IF Type = "SPLASH":
-             DIM Missile as New Splash
-             
+             Laser.X = Enemy.X
+             Laser.Y = Enemy.Y
+             Laser.IsVisible = TRUE
+             REPEAT UNTIL touching shield OR touching player OR touching floor:
+                 Move laser by speed
+             REPEAT
+             SplashDamage(Laser.X, Laser.Y)
+             Laser.IsVisible = FALSE
+         END IF
+     SUBROUTINE SplashDamage(X,Y)
+         Set shockwave sprite size to default
+         Place shockwave sprite at X,Y
+         shockwave.IsVisible = TRUE
+         REPEAT UNTIl shockwave.Size = SplashRadius
+         shockwave size = shockwave size + 1
+         IF touching player THEN
+             PlayerHit()
+             shockwave.IsVisible = FALSE
+             shockwave.Size = SplashRadius
+         END IF
+         REPEAT
+     END SUBROUTINE
+     
