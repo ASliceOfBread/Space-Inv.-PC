@@ -1,4 +1,4 @@
- LOAD ALGORITHM 
+ LOAD ALGORITHM ----------------------------------------------------------------------------------------------
  
  /MENU
 Make menu visible
@@ -25,20 +25,13 @@ WHEN  START BUTTON CLICKED
 /HIDE INSTRUCTIONS
     Hide instructions
 
-/ENABLE USER CONTROLS
-    WHILE UserControlsEnabled = TRUE
-        When LEFT ARROW pressed:
-            MoveLeft()
-        When RIGHT ARROW pressed:
-            MoveRight()
-        When SPACEBAR pressed
-            FireLaser()
-    LOOP
+
+
 
 GAMEPLAY
 
 /MOVEMENT
-    /PLAYER
+    /PLAYER ----------------------------------------------------------------------------------------------------
 SUBROUTINE MoveLeft():
     IF NOT touching boundary:
         Move player left
@@ -51,9 +44,9 @@ SUBROUTINE MoveRight():
     END IF
 END SUBROUTINE
 
-    /ENEMIES
+    /ENEMIES MOVEMENT ----------------------------------------------------------------------------------------
         WHILE Alive = TRUE:
-            after random time, move enemy by Speed
+            after Speed ms, move enemy by 50 pixels
         LOOP
 
         IF touching boundary:
@@ -61,7 +54,7 @@ END SUBROUTINE
             Speed = Speed * -1
         END IF
  
- /LASERS
+ /LASERS --------------------------------------------------------------------------------------------------------
      /PLAYER
      SUBROUTINE FireLaser():
          PLaser.X = Player.X
@@ -80,7 +73,7 @@ END SUBROUTINE
      /ENEMIES
      After random time + Delay, EnemyFireLaser(Enemy(x).Type)
      
-     FUNCTION EnemyID()
+     ENEMY FIRE LASER -----------------------------------------------------------------------------------------
      
      SUBROUTINE EnemyFireLaser(Type):
         IF Type = "NORMAL"
@@ -135,6 +128,9 @@ END SUBROUTINE
              SplashDamage(Laser.X, Laser.Y)
              Laser.IsVisible = FALSE
          END IF
+        
+    SPLASH DAMAGE ------------------------------------------------------------------------------------------------
+         
      SUBROUTINE SplashDamage(X,Y)
          Set shockwave sprite size to default
          Place shockwave sprite at X,Y
@@ -149,3 +145,22 @@ END SUBROUTINE
          REPEAT
      END SUBROUTINE
      
+     PLAYER HIT ---------------------------------------------------------------------------------------------
+     
+     SUBROUTINE PlayerHit()
+         IF Lives > 0 THEN:
+             Lives = Lives - 1
+             IF Lives = 0 THEN:
+                 GLOBAL Alive = 0
+                 IF CheckHighScore(Score) = TRUE THEN:
+                    Switch to high score input screen
+                    Open HighScore file for writing
+                    When btnSubmit.Click:
+                        DIM HS(0 to 4) As String
+                        FOR i = 1 to 5:
+                            HS(i - 1) = str(File.Read.Linei)
+                        NEXT i
+                        
+                        
+                 
+                 
