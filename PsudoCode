@@ -85,6 +85,40 @@ END SUBROUTINE
             Direction = 0
         END IF
  
+ /POSITIONING ---------------------------------------------------------------------------------------------------
+     /SHIELDS
+     DIM ShieldBlock(0 to 3, ,0 to 3, 0 to 5) As Shield
+         SUBROUTINE PostitionShields()
+             FOR s = 0 to 3
+                 FOR y = 0 to 3
+                     FOR x = 0 to 5
+                         IF s = 0:
+                             DIM TempX as Integer = -550
+                             ShieldBlock(s,y,x).X = TempX + ((x+1) x 20)
+                             ShieldBlock(s,y,x).Y = -352 + ((y+1) x 20)
+                             IF ShieldBlock(s,y,x).X = 0 AND ShieldBlock(s,y,x).Y = 0 OR 1 OR 2:
+                                 ShieldBlock(s,y,x).Type = "Left"
+                                 ShieldBlock(s,y,x).Edge = TRUE
+                             IF ShieldBlock(s,y,x).X = 0 AND ShieldBlock.Y = 3:
+                                 ShieldBlock(s,y,x).Type = "TopLeft"
+                                 ShieldBlocl(s,y,x).Edge = TRUE
+                         ELSE IF s = 1:
+                             TempX = -230
+                             ShieldBlock(s,y,x).X = TempX + ((x+1) x 20)
+                             ShieldBlock(s,y,x).Y = -352 + ((y+1) x 20)
+                         ELSE IF s = 2:
+                             TempX = 90
+                             ShieldBlock(s,y,x).X = TempX + ((x+1) x 20
+                             ShieldBlock(s,y,x).Y = -352 + ((y+1) x 20)
+                         ELSE IF s = 3:
+                             TempX = 410
+                             ShieldBlock(s,y,x).X = TempX + ((x+1) x 20)
+                             ShieldBlock(s,y,x).Y = -352 + (y+1) x 20)
+                         END IF
+                     NEXT x
+                 NEXT y
+             NEXT s
+                 
  /LASERS --------------------------------------------------------------------------------------------------------
      /PLAYER
      SUBROUTINE FireLaser():
