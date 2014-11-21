@@ -128,13 +128,34 @@ END SUBROUTINE
                              ShieldBlock(s,y,x).Type = "Normal"
                              ShieldBlock(s,y,x).Edge = FALSE
                          END IF
+                         ShieldBlock(s,y,x).IsVisible = TRUE
                      NEXT x
                  NEXT y
              NEXT s
          END SUBROUTINE
                  
-      /POSITION ENEMIES
-          
+     /POSITION ENEMIES
+         SUBROUTINE PositionEnemies()
+             DIM Enemy(0 to 3, 0 to 10) As Invader
+             For r = 0 to 3:
+                 For c = 0 to 11:
+                     Enemy(r,c).X = -445 + ((c+1) * 110)
+                     Enemy(r,c).Y = 362 - (((n+1) * 100) - 100)
+                 Next c
+             Next r
+         END SUBROUTINE
+         
+     /POSTITION PLAYER
+         SUBROUTINE PositionPlayer()
+             Player.X = -502
+             Player.Y = 0
+         END SUBROUTINE
+         
+ GENERATE ENEMY TYPES ------------------------------------------------------------------------------------------------
+ 
+     /SPAWN SCRIPT
+         
+
  /LASERS --------------------------------------------------------------------------------------------------------
      /PLAYER
      SUBROUTINE FireLaser():
@@ -142,10 +163,10 @@ END SUBROUTINE
          PLaser.Y = Player.Y
          For i = 0 To 43
          PLaser.Y = PLaser.Y +1
-         IF PLaser is touching Enemy(i)
-             Enemy(i).Health = Enemy(i).Health - 1
-             IF Enemy(i).Health = 0:
-                 Score = Score + Enemy(i).Score
+         IF PLaser is touching Enemy(r,c)
+             Enemy(r,c).Health = Enemy(r,c).Health - 1
+             IF Enemy(r,c).Health = 0:
+                 Score = Score + Enemy(r,c).Score
          END IF
          NEXT i
          IF there are no enemies left:
