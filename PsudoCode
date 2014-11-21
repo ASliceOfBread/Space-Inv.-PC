@@ -96,12 +96,6 @@ END SUBROUTINE
                              DIM TempX as Integer = -550
                              ShieldBlock(s,y,x).X = TempX + ((x+1) x 20)
                              ShieldBlock(s,y,x).Y = -352 + ((y+1) x 20)
-                             IF ShieldBlock(s,y,x).X = 0 AND ShieldBlock(s,y,x).Y = 0 OR 1 OR 2:
-                                 ShieldBlock(s,y,x).Type = "Left"
-                                 ShieldBlock(s,y,x).Edge = TRUE
-                             IF ShieldBlock(s,y,x).X = 0 AND ShieldBlock.Y = 3:
-                                 ShieldBlock(s,y,x).Type = "TopLeft"
-                                 ShieldBlocl(s,y,x).Edge = TRUE
                          ELSE IF s = 1:
                              TempX = -230
                              ShieldBlock(s,y,x).X = TempX + ((x+1) x 20)
@@ -115,10 +109,32 @@ END SUBROUTINE
                              ShieldBlock(s,y,x).X = TempX + ((x+1) x 20)
                              ShieldBlock(s,y,x).Y = -352 + (y+1) x 20)
                          END IF
+                         IF ShieldBlock(s,y,x).X = 0 AND ShieldBlock(s,y,x).Y = 0 OR 1 OR 2:
+                             ShieldBlock(s,y,x).Type = "Left"
+                             ShieldBlock(s,y,x).Edge = TRUE
+                         ELSE IF ShieldBlock(s,y,x).X = 0 AND ShieldBlock(s,y,x).Y = 3:
+                             ShieldBlock(s,y,x).Type = "TopLeft"
+                             ShieldBlock(s,y,x).Edge = TRUE
+                         ELSE IF ShieldBlock(s,y,x).X = 5 AND ShieldBlock(s,y,x).Y = 0 OR 1 OR 2:
+                             ShieldBlock(s,y,x).Type = "Right"
+                             ShieldBlock(s,y,x).Edge = TRUE
+                         ELSE IF ShieldBlock(s,y,x).X = 5 AND ShieldBlock(s,y,x).Y = 3:
+                             ShieldBlock(s,y,x).Type = "TopRight"
+                             ShieldBlock(s,y,x).Edge = TRUE
+                         ELSE IF ShieldBlock(s,y,x).X = 1 OR 2 OR 3 OR 4 AND ShieldBlock(s,y,x).Y = 3:
+                             ShieldBlock(s,y,x).Type = "Top"
+                             ShieldBlock(s,y,x).Edge = TRUE
+                         ELSE:
+                             ShieldBlock(s,y,x).Type = "Normal"
+                             ShieldBlock(s,y,x).Edge = FALSE
+                         END IF
                      NEXT x
                  NEXT y
              NEXT s
+         END SUBROUTINE
                  
+      /POSITION ENEMIES
+          
  /LASERS --------------------------------------------------------------------------------------------------------
      /PLAYER
      SUBROUTINE FireLaser():
