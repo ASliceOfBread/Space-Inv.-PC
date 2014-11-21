@@ -1,9 +1,32 @@
- LOAD ALGORITHM ----------------------------------------------------------------------------------------------
+ Menu ----------------------------------------------------------------------------------------------
  
  /MENU
 Make menu visible
-Make instructions visible
-Make start button visible
+Alive = 0
+When btnInstructions clicked:
+    Show instructions screen
+    if btnBack clicked:
+        Close instructions screen
+        Open menu screen
+    if btnNext clicked:
+        close instructions screen
+        open instructions 2 screen
+        when btnBack clicked:
+            close instructions 2 screen
+            show menu screen
+ When btnHS clicked:
+     close menu screen
+     show high scores screen
+     open high scores file for reading
+     extrapolate data onto high scores form
+     when btnBack clicked:
+         close high scores screen
+         show menu screen
+When btnClose clicked
+    Exit the program
+
+
+
 
 Timer = zero
 
@@ -22,9 +45,13 @@ WHEN  START BUTTON CLICKED
     Use spawn script to generate enemy types
     Use classes to define enemy properties
 
-/HIDE INSTRUCTIONS
-    Hide instructions
-
+/USER CONTROLS
+    When Left Arrow pressed:
+        MoveLeft()
+    When Right Arrow pressed:
+        MoveRight()
+    When Spacebar pressed:
+        FireLaser()
 
 
 
@@ -46,12 +73,16 @@ END SUBROUTINE
 
     /ENEMIES MOVEMENT ----------------------------------------------------------------------------------------
         WHILE Alive = TRUE:
+        IF Direction = 1
             after Speed ms, move enemy by 50 pixels
+        ELSE IF Direction = 0:
+            after Speed ms, move enemy by -50 pixels
+        END IF
         LOOP
 
         IF touching boundary:
             Move enemy down a row
-            Speed = Speed * -1
+            Direction = 0
         END IF
  
  /LASERS --------------------------------------------------------------------------------------------------------
@@ -59,10 +90,12 @@ END SUBROUTINE
      SUBROUTINE FireLaser():
          PLaser.X = Player.X
          PLaser.Y = Player.Y
-         Move PLaser up
          For i = 0 To 43
+         PLaser.Y = PLaser.Y +1
          IF PLaser is touching Enemy(i)
              Enemy(i).Health = Enemy(i).Health - 1
+             IF Enemy(i).Health = 0:
+                 Score = Score + Enemy(i).Score
          END IF
          NEXT i
          IF there are no enemies left:
