@@ -154,7 +154,48 @@ END SUBROUTINE
  GENERATE ENEMY TYPES ------------------------------------------------------------------------------------------------
  
      /SPAWN SCRIPT
-         
+         SUBROUNTINE SpawnScript()
+             DIM global SplashTrack as Integer = 0
+             DIM global InstantTrack as Integer = 0
+             DIM global RapidTrack as Integer = 0
+             For r = 0 to 3:
+                 For c = 0 to 11:
+                     IF PickRandom(0 to 1) > ProbSpawn:
+                         Enemy(r,c).Type = PickEnemy()
+                     ELSE:
+                         Enemy(r,c).Type = "Normal"
+                     END IF
+                 Next c
+             Next r
+         END SUBROUTINE
+                     
+        FUNCTION PickEnemy() as String
+            DIM rand as Single = PickRandom(0 to 1)
+            IF rand >= 0 AND > 0.3:
+                IF InstantTrack = 0:
+                   InstantTrack = 1
+                   Return "Instant"
+                ELSE:
+                    Return PickEnemy()
+                END IF
+            IF rand >= 0.3 AND < 0.6:
+                IF SplashTrack = 0:
+                    SpashTrack = 1
+                    Return "Splash"
+                ELSE:
+                    Return PickEnemy()
+                END IF
+            IF rand >= 0.6 AND < 0.9
+                IF RapidTrack = 0
+                    RapidTrack = 1
+                    Return "Rapid"
+                ELSE:
+                    Return PickEnemy()
+                END IF
+            ELSE:
+                Return PickEnemy()
+            END IF
+        END FUNCTION
 
  /LASERS --------------------------------------------------------------------------------------------------------
      /PLAYER
