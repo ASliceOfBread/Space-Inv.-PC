@@ -160,7 +160,7 @@ END SUBROUTINE
              DIM global RapidTrack as Integer = 0
              For r = 0 to 3:
                  For c = 0 to 11:
-                     IF PickRandom(0 to 1) > ProbSpawn:
+                     IF PickRandom(0 to 1) > global ProbSpawn:
                          Enemy(r,c).Type = PickEnemy()
                      ELSE:
                          Enemy(r,c).Type = "Normal"
