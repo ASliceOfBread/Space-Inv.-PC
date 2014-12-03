@@ -171,29 +171,29 @@ END SUBROUTINE
                      
         FUNCTION PickEnemy() as String
             DIM rand as Single = PickRandom(0 to 1)
-            IF rand >= 0 AND > 0.3:
-                IF InstantTrack = 0:
-                   InstantTrack = 1
-                   Return "Instant"
-                ELSE:
-                    Return PickEnemy()
+            IF rand >= 0 AND < 0.3:
+                IF global InstantTrack = 0:
+                    global InstantTrack = 1
+                    Return "Instant"
                 END IF
-            IF rand >= 0.3 AND < 0.6:
-                IF SplashTrack = 0:
-                    SpashTrack = 1
+            ELSE IF rand >= 0.3 AND < 0.6:
+                IF global SplashTrack = 0:
+                    global SpashTrack = 1
                     Return "Splash"
-                ELSE:
-                    Return PickEnemy()
                 END IF
-            IF rand >= 0.6 AND < 0.9
-                IF RapidTrack = 0
-                    RapidTrack = 1
+            ELSE IF rand >= 0.6 AND < 0.9
+               IF global RapidTrack = 0
+                    global RapidTrack = 1
                     Return "Rapid"
-                ELSE:
                     Return PickEnemy()
-                END IF
+               END IF
             ELSE:
                 Return PickEnemy()
+            END IF
+            IF global InstantTrack = 1 AND global SplashTrack = 1 AND global RapidTrack = 1:
+                global InstantTrack = 0
+                global SplashTrack = 0
+                global RapidTrack = 0
             END IF
         END FUNCTION
 
