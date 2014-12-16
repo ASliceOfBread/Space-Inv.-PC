@@ -87,8 +87,8 @@ END SUBROUTINE
  
  /POSITIONING ---------------------------------------------------------------------------------------------------
      /SHIELDS
-     DIM ShieldBlock(0 to 3, ,0 to 3, 0 to 5) As Shield
          SUBROUTINE PostitionShields()
+         DIM ShieldBlock(0 to 3, ,0 to 3, 0 to 5) As Shield
              FOR s = 0 to 3
                  FOR y = 0 to 3
                      FOR x = 0 to 5
@@ -138,7 +138,7 @@ END SUBROUTINE
          SUBROUTINE PositionEnemies()
              DIM Enemy(0 to 3, 0 to 10) As Invader
              For r = 0 to 3:
-                 For c = 0 to 11:
+                 For c = 0 to 10:
                      Enemy(r,c).X = -445 + ((c+1) * 110)
                      Enemy(r,c).Y = 362 - (((n+1) * 100) - 100)
                  Next c
@@ -149,6 +149,7 @@ END SUBROUTINE
          SUBROUTINE PositionPlayer()
              Player.X = -502
              Player.Y = 0
+             Player.IsVisible = TRUE
          END SUBROUTINE
          
  GENERATE ENEMY TYPES ------------------------------------------------------------------------------------------------
@@ -202,28 +203,31 @@ END SUBROUTINE
      SUBROUTINE FireLaser():
          PLaser.X = Player.X
          PLaser.Y = Player.Y
-         For i = 0 To 43
-         PLaser.Y = PLaser.Y +1
-         IF PLaser is touching Enemy(r,c)
-             Enemy(r,c).Health = Enemy(r,c).Health - 1
-             IF Enemy(r,c).Health = 0:
-                 Score = Score + Enemy(r,c).Score
-         END IF
-         NEXT i
+         PLaser.IsVisible = TRUE
+         For r = 0 to 3
+             For c = 0 to 10
+                 PLaser.Y = PLaser.Y +1
+                 IF PLaser is touching Enemy(r,c)
+                     Enemy(r,c).Health = Enemy(r,c).Health - 1
+                 IF Enemy(r,c).Health = 0:
+                     Score = Score + Enemy(r,c).Score
+                 END IF
+             NEXT r
+         NEXT c
          IF there are no enemies left:
                  Move onto next level
          END IF
      END SUBROUTINE
      
      /ENEMIES
-     After random time + Delay, EnemyFireLaser(Enemy(x).Type)
+     After random time + Delay, EnemyFireLaser()
      
      ENEMY FIRE LASER -----------------------------------------------------------------------------------------
      
-     SUBROUTINE EnemyFireLaser(Type):
+     SUBROUTINE EnemyFireLaser():
         IF Type = "NORMAL"
-            Laser.X = Enemy.X
-            Laser.Y = Enemy.Y
+            Laser.X = Enemy(r,c).X
+            Laser.Y = Enemy(r,c).Y
             Laser.IsVisible = TRUE
             REPEAT UNTIL touching shield OR touching player OR touching floor:
                 Move laser by Speed
@@ -235,8 +239,8 @@ END SUBROUTINE
             ELSE IF touching ground:
                 Laser.IsVisible = FALSE
         ELSE IF Type = "RAPID":
-            Laser.X = Enemy.X
-            Laser.Y = Enemy.Y
+            Laser.X = Enemy(r,c).X
+            Laser.Y = Enemy(r,c).Y
             Laser.IsVisible = TRUE
             REPEAT UNTIL touching shield OR touching player OR touching floor:
                 Move laser by speed
@@ -250,8 +254,8 @@ END SUBROUTINE
             Wait random 0.5 to 1
             EnemyFireLaser("RAPID")
         ELSE IF Type = "INSTANT"
-            Laser.X = Enemy.X
-            Laser.Y = Enemy.Y
+            Laser.X = Enemy(r,c).X
+            Laser.Y = Enemy(r,c).Y
             Laser.IsVisible = TRUE
             REPEAT UNTIL touching shield OR touching player OR touching floor:
                 LaserHeight = LaserHeight + 1
@@ -264,8 +268,8 @@ END SUBROUTINE
                 Laser.IsVisible = FALSE
                 LaserHeight = DefaultLaserHeight
         ELSE IF Type = "SPLASH":
-             Laser.X = Enemy.X
-             Laser.Y = Enemy.Y
+             Laser.X = Enemy(r,c).X
+             Laser.Y = Enemy(r,c).Y
              Laser.IsVisible = TRUE
              REPEAT UNTIL touching shield OR touching player OR touching floor:
                  Move laser by speed
