@@ -61,13 +61,13 @@ GAMEPLAY
     /PLAYER ----------------------------------------------------------------------------------------------------
 SUBROUTINE MoveLeft():
     IF NOT touching boundary:
-        Move player left
+        Player.X = Player.X - 10
     END IF
 END SUBROUTINE
 
 SUBROUTINE MoveRight():
     IF NOT touching boundary:
-        Move player right
+        Player.X = Player.X + 10
     END IF
 END SUBROUTINE
 
@@ -83,6 +83,7 @@ END SUBROUTINE
         IF touching boundary:
             Move enemy down a row
             Direction = 0
+            Speed = Speed - 100
         END IF
  
  /POSITIONING ---------------------------------------------------------------------------------------------------
